@@ -48,8 +48,17 @@ elsif user_ask :default_confirm, 'Would you like to install Oh-My-Zsh?'
   system "#{HOME}/.dotfiles/install-omz"
 end
 
-if user_ask :default_confirm, 'Would you like to install powerlevel9k?'
-  system "#{HOME}/.dotfiles/install-powerlevel9k"
+if File.exist? "#{HOME}/.oh-my-zsh"
+  THEMES_DIR = "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
+  POWERLEVEL9K_DIR = "#{THEMES_DIR}/powerlevel9k"
+
+  unless File.exist? "#{THEMES_DIR}/powerlevel9k"
+    if user_ask :default_confirm, 'Would you like to install powerlevel9k?'
+      system "#{HOME}/.dotfiles/install-powerlevel9k"
+    end
+  else
+    STDERR.puts 'powerlevel9k is already installed.'.green
+  end
 end
 
 puts

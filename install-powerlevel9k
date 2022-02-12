@@ -3,20 +3,13 @@
 require "#{File.dirname __FILE__}/install_scripts/colorize"
 require "#{File.dirname __FILE__}/install_scripts/platform"
 
-themes_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
-powerlevel9k_dir = "#{themes_dir}/powerlevel9k"
+puts 'Cloning powerlevel9k from GitHub (bhilburn/powerlevel9k)...'.blue
+system "git clone --depth 1 https://github.com/bhilburn/powerlevel9k '#{POWERLEVEL9K_DIR}'"
+puts 'Done.'.blue
 
-unless File.exist? "#{themes_dir}/powerlevel9k"
-  puts 'Cloning powerlevel9k from GitHub (bhilburn/powerlevel9k)...'.blue
-  system "git clone --depth 1 https://github.com/bhilburn/powerlevel9k '#{powerlevel9k_dir}'"
-  puts 'Done.'.blue
-else
-  STDERR.puts 'powerlevel9k is already installed.'.green
-end
-
-unless File.exist? "#{themes_dir}/powerlevel9k.zsh-theme"
+unless File.exist? "#{THEMES_DIR}/powerlevel9k.zsh-theme"
   puts 'Symlinking powerlevel9k theme file...'.blue
-  system "ln -s '#{powerlevel9k_dir}/powerlevel9k.zsh-theme' '#{themes_dir}/powerlevel9k.zsh-theme'"
+  system "ln -s '#{POWERLEVEL9K_DIR}/powerlevel9k.zsh-theme' '#{THEMES_DIR}/powerlevel9k.zsh-theme'"
   puts 'Done.'.blue
 end
 
