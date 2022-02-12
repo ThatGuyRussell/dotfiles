@@ -11,7 +11,6 @@
 brew cu --all -q
 
 export PATH=$HOME/bin:/usr/local/bin:$HOME/thatguyrussell/.local/bin:/opt/homebrew/lib/ruby/gems/3.1.0/bin:$PATH
-export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
  
@@ -47,11 +46,11 @@ fi
 
 # Pip
 if [[ $OSTYPE == 'linux'* ]]; then
-        sudo apt-get install python3-pip
+    sudo apt-get install python3-pip
 fi
 
 if ! command -v pip &> /dev/null; then
-    python -m ensurepip --upgrade --user
+    sudo python -m ensurepip --upgrade
 fi
 
 # Ruby
@@ -104,7 +103,7 @@ source $HOME/.ohmyzsh_config
 # https://github.com/athityakumar/colorls #
 ###########################################
 if ! command -v colorls &> /dev/null; then
-    pip install colorls --user
+    sudo pip install colorls
 fi
 
 source $(dirname $(gem which colorls))/tab_complete.sh
@@ -116,7 +115,7 @@ alias lc='colorls -lA --sd'
 # Pygmentize #
 ##############
 if ! command -v pygmentize &> /dev/null; then
-    brew install pygments
+    sudo pip install Pygments
 fi
 
 alias pcat='pygmentize -f terminal256 -O style=monokai -g'
@@ -130,8 +129,9 @@ if ! command -v fzf &> /dev/null; then
         brew install fzf
     fi
 
-    if [[ $OSTYPE == 'msys'* ]]; then
-        
+    if [[ $OSTYPE == 'linux'* ]]; then
+        git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+        $HOME/.fzf/install
     fi
 fi
 
