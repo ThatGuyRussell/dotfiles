@@ -25,9 +25,17 @@ end
 case OS.which?
 when :macos
   puts
-  puts '--- macOS detected ---'.blue
+  puts '--- MacOS Detected ---'.blue
   Dir.entries("#{HOME}/.dotfiles/macos").reject{ |f| File.directory? f }.each do |f|
     symlink 'macos', f
+  end
+  puts
+  install_brew
+when :linux
+  puts
+  puts '--- Linux Detected ---'.blue
+  Dir.entries("#{HOME}/.dotfiles/linux").reject{ |f| File.directory? f }.each do |f|
+    symlink 'linux', f
   end
   puts
   install_brew
