@@ -40,13 +40,11 @@ elsif user_ask :default_confirm, 'Would you like to install Oh-My-Zsh?'
   system "#{HOME}/.dotfiles/install-omz"
 end
 
-puts
-if File.exist? "#{HOME}/.oh-my-zsh/custom/themes/powerlevel9k"
-  STDERR.puts 'powerlevel9k prompt is already installed.'.green
-elsif user_ask :default_confirm, 'Would you like to install powerlevel9k?'
+if user_ask :default_confirm, 'Would you like to install powerlevel9k?'
   system "#{HOME}/.dotfiles/install-powerlevel9k"
 end
 
+puts
 if (ENV['SHELL'] =~ /zsh/) == nil
   puts
   puts 'Run `chsh -s $(which zsh) && exec zsh` to switch to Zsh.'.yellow
