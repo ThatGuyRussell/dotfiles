@@ -46,18 +46,34 @@ if ! command -v brew &> /dev/null; then
 fi
 
 # Pip
+if [[ $OSTYPE == 'linux'* ]]; then
+        sudo apt-get install python3-pip
+fi
+
 if ! command -v pip &> /dev/null; then
     python -m ensurepip --upgrade --user
 fi
 
 # Ruby
 if ! command -v ruby &> /dev/null; then
-    brew install ruby
+    if [[ $OSTYPE == 'darwin'* ]]; then
+        brew install ruby
+    fi
+
+    if [[ $OSTYPE == 'linux'* ]]; then
+        sudo apt-get install ruby
+    fi
 fi  
 
 # Gradle
 if ! command -v gradle &> /dev/null; then
-    brew install gradle
+    if [[ $OSTYPE == 'darwin'* ]]; then
+        brew install gradle
+    fi
+
+    if [[ $OSTYPE == 'linux'* ]]; then
+        sudo apt-get install gradle
+    fi
 fi
 
 # Git
@@ -69,8 +85,8 @@ if ! command -v diff-so-fancy &> /dev/null; then
         brew install diff-so-fancy
     fi
 
-    if [[ $OSTYPE == 'msys'* ]]; then
-        py -m ensurepip --upgrade --user
+    if [[ $OSTYPE == 'linux'* ]]; then
+        sudo apt-get install diff-so-fancy
     fi
 fi
  
