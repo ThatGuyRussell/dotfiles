@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require "#{File.dirname __FILE__}/install_scripts/colorize"
+require "#{File.dirname __FILE__}/install_scripts/platform"
+
+themes_dir = "#{ENV['HOME']}/.oh-my-zsh/custom/themes"
+powerlevel9k_dir = "#{themes_dir}/powerlevel9k"
+
+unless File.exist? "#{themes_dir}/powerlevel9k"
+  puts 'Cloning powerlevel9k from GitHub (bhilburn/powerlevel9k)...'.blue
+  system "git clone --depth 1 https://github.com/bhilburn/powerlevel9k '#{powerlevel9k_dir}'"
+  puts 'Done.'.blue
+else
+  STDERR.puts 'powerlevel9k is already installed.'.green
+end
+
+unless File.exist? "#{themes_dir}/powerlevel9k.zsh-theme"
+  puts 'Symlinking powerlevel9k theme file...'.blue
+  system "ln -s '#{powerlevel9k_dir}/powerlevel9k.zsh-theme' '#{themes_dir}/powerlevel9k.zsh-theme'"
+  puts 'Done.'.blue
+end
+
+fonts_dir = case OS.which?
+when :linux
+  "/usr/share/fonts"
+when :macos
+  "~/.fonts"
+when :windows
+  "C:\Windows\Fonts"
+end
+
+unless File.exist? "#{fonts_dir}/Hack Regular Nerd Font Complete.ttf"
+  puts 'Installing Hack Nerd Font (ryanoasis/nerd-fonts)...'.blue
+  case OS.which?
+  when :windows
+    system "./install.ps1 Hack"
+  else
+    system "./install.sh Hack"
+  end
+  puts 'Done.'.blue
+else
+  STDERR.puts 'Hack Nerd Font is already installed.'.green
+end

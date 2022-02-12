@@ -1,4 +1,0 @@
-[
-  { "key": "cmd+shift+j", "command": "workbench.action.terminal.focusNext" },
-  { "key": "cmd+shift+k", "command": "workbench.action.terminal.focusPrevious" }
-]

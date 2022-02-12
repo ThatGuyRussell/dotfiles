@@ -19,4 +19,5 @@ def install_brew()
   end
   puts
   puts 'Run `brew bundle --global` to install default packages.'.yellow
+  puts '(Any cask apps that are already installed without cask must first be uninstalled)'.yellow
 end

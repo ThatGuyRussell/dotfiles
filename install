@@ -23,19 +23,12 @@ Dir.entries("#{HOME}/.dotfiles/home_dir").reject{ |f| File.directory? f }.each d
 end
 
 case OS.which?
-when :linux
-  puts
-  puts '--- Linux detected ---'.blue
-  symlink 'linux', '.zshrc.linux'
-  symlink 'linux', 'keybindings.json', '.config/Code/User'
-  symlink 'custom_dir', 'settings.json', '.config/Code/User'
 when :macos
   puts
   puts '--- macOS detected ---'.blue
-  symlink 'macos', '.zshrc.macos'
-  symlink 'macos', '.Brewfile'
-  symlink 'macos', 'keybindings.json', 'Library/Application Support/Code/User'
-  symlink 'custom_dir', 'settings.json', 'Library/Application Support/Code/User'
+  Dir.entries("#{HOME}/.dotfiles/macos").reject{ |f| File.directory? f }.each do |f|
+    symlink 'macos', f
+  end
   puts
   install_brew
 end
@@ -48,10 +41,10 @@ elsif user_ask :default_confirm, 'Would you like to install Oh-My-Zsh?'
 end
 
 puts
-if File.exist? "#{HOME}/.oh-my-zsh/custom/themes/spaceship-prompt"
-  STDERR.puts 'Spaceship prompt is already installed.'.green
-elsif user_ask :default_confirm, 'Would you like to install spaceship-prompt?'
-  system "#{HOME}/.dotfiles/install-spaceship-prompt"
+if File.exist? "#{HOME}/.oh-my-zsh/custom/themes/powerlevel9k"
+  STDERR.puts 'powerlevel9k prompt is already installed.'.green
+elsif user_ask :default_confirm, 'Would you like to install powerlevel9k?'
+  system "#{HOME}/.dotfiles/install-powerlevel9k"
 end
 
 if (ENV['SHELL'] =~ /zsh/) == nil
