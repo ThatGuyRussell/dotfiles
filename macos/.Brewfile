@@ -44,6 +44,7 @@ brew 'gradle'
 brew 'tree'
 brew 'wget'
 brew 'zsh'
+cask 'docker'
 cask 'google-drive'
 cask 'google-drive-file-stream'
 
