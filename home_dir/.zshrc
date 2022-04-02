@@ -2,17 +2,29 @@
 # Awesome Tips For Terminal!                                                                    #
 # https://medium.com/@ivanaugustobd/your-terminal-can-be-much-much-more-productive-5256424658e8 #
 #################################################################################################
- 
-########
-# MAIN #
-########
 
-# Update all outdated brew apps
-brew cu --all -q
+alias echo-black="echo '\033[0;30m'"
+alias echo-dark-gray="echo '\033[1;30m'"
+alias echo-red="echo '\033[0;31m'"
+alias echo-light-red="echo '\033[1;31m'"
+alias echo-green="echo '\033[0;32m'"
+alias echo-light-green="echo '\033[1;32m'"
+alias echo-brown/orange="echo '\033[0;33m'"
+alias echo-yellow="echo '\033[1;33m'"
+alias echo-blue="echo '\033[0;34m'"
+alias echo-light-blue="echo '\033[1;34m'"
+alias echo-purple="echo '\033[0;35m'"
+alias echo-light-purple="echo '\033[1;35m'"
+alias echo-cyan="echo '\033[0;36m'"
+alias echo-light-cyan="echo '\033[1;36m'"
+alias echo-light-gray="echo '\033[0;37m'"
+alias echo-white="echo '\033[1;37m'"
 
-export PATH=$HOME/bin:/usr/local/bin:$HOME/thatguyrussell/.local/bin:/opt/homebrew/lib/ruby/gems/3.1.0/bin:$PATH
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+######################
+echo-cyan "Initializing..."
+######################
+
+export PATH=$HOME/bin:/usr/local/bin:$HOME/thatguyrussell/.local/bin:$PATH
  
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
     source /etc/profile.d/vte-2.91.sh
@@ -35,44 +47,55 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_BEEP
 
-##############
-# Core Tools #
-##############
+###########################################
+echo-cyan "Ensuring Core Tools are Installed..."
+###########################################
 
 # Brew
+
 if ! command -v brew &> /dev/null; then
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh
 fi
 
-# Pip
-if [[ $OSTYPE == 'linux'* ]]; then
-    sudo apt-get install python3-pip
-fi
+export PATH="/opt/homebrew/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export HOMEBREW_NO_ANALYTICS=1
 
+echo ""
+brew cu --all -q >/dev/null
+
+# Pip
 if ! command -v pip &> /dev/null; then
     sudo python -m ensurepip --upgrade
+fi
+pip install --upgrade pip >/dev/null 2>&1
+
+# C++
+if ! command -v gcc &> /dev/null; then
+    brew install gcc
 fi
 
 # Ruby
 if ! command -v ruby &> /dev/null; then
-    if [[ $OSTYPE == 'darwin'* ]]; then
-        brew install ruby
-    fi
+    brew install ruby
+fi
+export PATH="/opt/homebrew/lib/ruby/gems/3.1.0/bin:$PATH"
 
-    if [[ $OSTYPE == 'linux'* ]]; then
-        sudo apt-get install ruby
-    fi
-fi  
+# Make
+if ! command -v make &> /dev/null; then
+    brew install make
+fi
+
+# NPM
+if ! command -v npm &> /dev/null; then
+    brew install npm
+fi
+export PATH="$PATH:/opt/homebrew/lib/node_modules/npm/bin"
 
 # Gradle
 if ! command -v gradle &> /dev/null; then
-    if [[ $OSTYPE == 'darwin'* ]]; then
-        brew install gradle
-    fi
-
-    if [[ $OSTYPE == 'linux'* ]]; then
-        sudo apt-get install gradle
-    fi
+    brew install gradle
 fi
 
 # Git
@@ -80,15 +103,21 @@ alias edit_git_config="code $HOME/.gitconfig"
 alias edit_work_git_config="code $HOME/.gitconfig-work"
 
 if ! command -v diff-so-fancy &> /dev/null; then
-    if [[ $OSTYPE == 'darwin'* ]]; then
-        brew install diff-so-fancy
-    fi
-
-    if [[ $OSTYPE == 'linux'* ]]; then
-        sudo apt-get install diff-so-fancy
-    fi
+    brew install diff-so-fancy
 fi
- 
+
+# Go
+if ! command -v go &> /dev/null; then
+    brew install go
+fi
+export GOPATH=$HOME/go
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+# Helm
+if ! command -v go &> /dev/null; then
+    brew install helm
+fi
 
 #####################
 # Oh My Zsh         #
@@ -125,14 +154,7 @@ alias pcat='pygmentize -f terminal256 -O style=monokai -g'
 # https://github.com/junegunn/fzf #
 ###################################
 if ! command -v fzf &> /dev/null; then
-    if [[ $OSTYPE == 'darwin'* ]]; then
-        brew install fzf
-    fi
-
-    if [[ $OSTYPE == 'linux'* ]]; then
-        git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
-        $HOME/.fzf/install
-    fi
+    brew install fzf
 fi
 
 source $HOME/.fzf.zsh
@@ -155,7 +177,7 @@ alias {z-cd,zcd}='cd $(fdfind --type directory | fzf)'
 # Splitgate Development #
 #########################
 
-# None Yet
+source "$HOME/.splitgate-service-vars"
 
 ########
 # MISC #
@@ -183,3 +205,5 @@ function replace_w_symlink_mv {
     shift
     done
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
