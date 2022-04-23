@@ -15,7 +15,7 @@ vs Linux).
 Clone this repository into `~/.dotfiles`:
 
 ```
-$ git clone https://github.com/mfdorst/dotfiles ~/.dotfiles
+$ git clone https://github.com/thatguyrussell/dotfiles ~/.dotfiles
 ```
 
 and run
@@ -41,12 +41,3 @@ the end of their name before the new version is symlinked.
 Some machines need custom settings in their dotfiles. The best way to do this is to create a
 secondary dotfile with the custom settings, and source it from the main dotfile.
 For instance, local Zsh settings should go in `.zshrc.local`, which is sourced from `.zshrc`.
-
-# How can I use this for my own dotfiles?
-
-If you like my installer script, I encourage you to fork this project, and replace my dotfiles with yours.
-
-# Contributing
-
-If you have suggestions for improvements or bug fixes, please feel free to open an issue or a pull request.
-This has been my favorite (and most useful) personal project, and I'd love to make it useful for other people.

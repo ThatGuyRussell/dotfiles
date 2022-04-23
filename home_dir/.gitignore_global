@@ -2,7 +2,7 @@
 # Visual Studio Code #
 ######################
 
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -12,10 +12,13 @@
 # Local History for Visual Studio Code
 .history/
 *.app
-.snapshots/*
+.snapshots/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Mongo Extension
+.mongoDbExtension/
 
 ########
 # Java #
